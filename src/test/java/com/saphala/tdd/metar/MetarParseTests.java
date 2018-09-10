@@ -22,7 +22,14 @@ class MetarParseTests {
       assertThat(reportTime).isEqualTo("210453Z");
 
    }
-
+   
+   @Test
+   void windsShouldBeTheThirdElement() {
+      String winds = getItemAt(2);
+      
+      assertThat(winds).isEqualTo("10006KT");
+   }
+   
    private String getItemAt(int index) {
       return RAW_METAR.split(" ")[index];
    }
