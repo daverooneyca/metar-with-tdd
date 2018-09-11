@@ -9,15 +9,18 @@ import org.junit.jupiter.api.Test;
 
 class MetarParseTests {
 
-   private static final int TEMPERATURE_INDEX = 7;
    private static final int STATION_INDEX = 0;
    private static final int REPORT_TIME_INDEX = 1;
    private static final int WINDS_INDEX = 2;
    private static final int VISIBILITY_INDEX = 3;
    private static final int CLOUDS_BEGIN_INDEX = 4;
    private static final int CLOUDS_END_INDEX = 6;
-   private static final String RAW_METAR = "KDTW 210453Z 10006KT 9SM FEW025 BKN055 OVC110 23/20 A2987 RMK AO2 RAE35 SLP111 P0000 T02330200 402830194";
+   private static final int TEMPERATURE_INDEX = 7;
+   private static final int ALTIMETER_INDEX = 8;
 
+   private static final String RAW_METAR = "KDTW 210453Z 10006KT 9SM FEW025 BKN055 OVC110 23/20 A2987 RMK AO2 RAE35 SLP111 P0000 T02330200 402830194";
+   
+   
    @Test
    void stationShouldBeTheFirstElement() {
       String station = getItemAt(STATION_INDEX);
@@ -65,6 +68,12 @@ class MetarParseTests {
       assertThat(temperature).isEqualTo("23/20");
    }
    
+   @Test
+   void altimeterShouldBeTheNinthElement() {
+      String altimeter = getItemAt(ALTIMETER_INDEX);
+      
+      assertThat(altimeter).isEqualTo("A2987");
+   }
    
    private String getItemAt(int index) {
       return RAW_METAR.split(" ")[index];
