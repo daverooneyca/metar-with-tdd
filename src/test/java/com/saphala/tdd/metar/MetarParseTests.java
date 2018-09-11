@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 class MetarParseTests {
 
+   private static final int TEMPERATURE_INDEX = 7;
    private static final int STATION_INDEX = 0;
    private static final int REPORT_TIME_INDEX = 1;
    private static final int WINDS_INDEX = 2;
@@ -55,6 +56,13 @@ class MetarParseTests {
       }
       
       assertThat(clouds).containsExactly("FEW025", "BKN055", "OVC110");
+   }
+   
+   @Test
+   void temperatureShouldBeTheEightElement() {
+      String temperature = getItemAt(TEMPERATURE_INDEX);
+      
+      assertThat(temperature).isEqualTo("23/20");
    }
    
    
