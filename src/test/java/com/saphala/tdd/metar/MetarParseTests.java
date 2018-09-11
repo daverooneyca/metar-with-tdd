@@ -104,6 +104,16 @@ class MetarParseTests {
       assertThat(winds).isEqualTo("VRB04KT");
    }
    
+   @Test
+   void visibilityforChicago() {
+      metar = METAR_CHICAGO;
+      
+      String visibility = getItemAt(VISIBILITY_INDEX);
+      
+      assertThat(visibility).isEqualTo("10SM");
+   }
+   
+   
    private String getItemAt(int index) {
       return metar.split(" ")[index];
    }
