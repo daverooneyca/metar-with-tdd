@@ -30,6 +30,14 @@ class MetarParseTests {
       assertThat(winds).isEqualTo("10006KT");
    }
    
+   @Test
+   void visibilityShouldBeTheFourthElement() {
+      String visibility = getItemAt(3);
+            
+      assertThat(visibility).isEqualTo("9SM");
+   }
+   
+   
    private String getItemAt(int index) {
       return RAW_METAR.split(" ")[index];
    }
