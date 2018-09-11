@@ -62,7 +62,7 @@ class MetarParseTests {
    void temperatureForDetroit() {
       Metar metar = new Metar(METAR_DETROIT);
       
-      String temperature = metar.getItemAt(Metar.TEMPERATURE_INDEX);
+      String temperature = metar.extractTemperature();
       
       assertThat(temperature).isEqualTo("23/20");
    }
@@ -119,6 +119,15 @@ class MetarParseTests {
       List<String> clouds = metar.extractClouds();
       
       assertThat(clouds).containsExactly("FEW043"); 
+   }
+   
+   @Test
+   void temperatureForChicago() {
+      Metar metar = new Metar(METAR_CHICAGO);
+      
+      String temperature = metar.extractTemperature();
+      
+      assertThat(temperature).isEqualTo("25/13");
    }
 
 }

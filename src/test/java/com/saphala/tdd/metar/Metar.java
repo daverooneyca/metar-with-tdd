@@ -1,6 +1,7 @@
 package com.saphala.tdd.metar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Metar {
@@ -22,20 +23,31 @@ public class Metar {
    }
 
    public List<String> extractClouds() {
-      List<String> clouds = new ArrayList<String>();
+      int cloudsEndIndex = getCloudsEndIndex();
       
-      for (int i = Metar.CLOUDS_BEGIN_INDEX; i < rawMetarArray.length; i++) {
-         if(Character.isDigit(rawMetarArray[i].charAt(0))) {
-            break;
-         }
-         
-         clouds.add(rawMetarArray[i]);
-      }
-      
+      List<String> clouds = Arrays.asList(rawMetarArray).subList(CLOUDS_BEGIN_INDEX, cloudsEndIndex);
+            
       return clouds;
    }
 
    public String getItemAt(int index) {
       return rawMetarArray[index];
+   }
+
+   public String extractTemperature() {
+      return getItemAt(getCloudsEndIndex());
+   }
+
+   private int getCloudsEndIndex() {
+      int cloudsEndIndex = CLOUDS_BEGIN_INDEX;
+      
+      for (int i = CLOUDS_BEGIN_INDEX; i < rawMetarArray.length; i++) {
+         if(Character.isDigit(rawMetarArray[i].charAt(0))) {
+            break;
+         }
+         
+         cloudsEndIndex++;
+      }
+      return cloudsEndIndex;
    }
 }
