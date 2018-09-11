@@ -14,7 +14,6 @@ class MetarParseTests {
    private static final int WINDS_INDEX = 2;
    private static final int VISIBILITY_INDEX = 3;
    private static final int CLOUDS_BEGIN_INDEX = 4;
-   private static final int CLOUDS_END_INDEX = 6;
    private static final int TEMPERATURE_INDEX = 7;
    private static final int ALTIMETER_INDEX = 8;
 
@@ -54,11 +53,7 @@ class MetarParseTests {
    
    @Test
    void cloudsForDetroit() {
-      List<String> clouds = new ArrayList<String>();
-      
-      for (int i = CLOUDS_BEGIN_INDEX; i <= CLOUDS_END_INDEX; i++) {
-         clouds.add(getItemAt(i));
-      }
+      List<String> clouds = extractClouds();
       
       assertThat(clouds).containsExactly("FEW025", "BKN055", "OVC110");
    }
@@ -113,6 +108,30 @@ class MetarParseTests {
       assertThat(visibility).isEqualTo("10SM");
    }
    
+   @Test
+   void cloudsForChicago() {
+      metar = METAR_CHICAGO;
+      
+      List<String> clouds = extractClouds();
+      
+      assertThat(clouds).containsExactly("FEW043"); 
+   }
+
+   private List<String> extractClouds() {
+      List<String> clouds = new ArrayList<String>();
+      
+      String[] rawMetarArray = metar.split(" ");
+      
+      for (int i = CLOUDS_BEGIN_INDEX; i < rawMetarArray.length; i++) {
+         if(Character.isDigit(rawMetarArray[i].charAt(0))) {
+            break;
+         }
+         
+         clouds.add(rawMetarArray[i]);
+      }
+      
+      return clouds;
+   }
    
    private String getItemAt(int index) {
       return metar.split(" ")[index];
