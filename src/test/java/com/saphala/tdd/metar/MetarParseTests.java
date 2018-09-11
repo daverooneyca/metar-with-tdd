@@ -95,6 +95,15 @@ class MetarParseTests {
       assertThat(reportTime).isEqualTo("111751Z");
    }
    
+   @Test
+   void windsForChicago() {
+      metar = METAR_CHICAGO;
+      
+      String winds = getItemAt(WINDS_INDEX);
+      
+      assertThat(winds).isEqualTo("VRB04KT");
+   }
+   
    private String getItemAt(int index) {
       return metar.split(" ")[index];
    }
