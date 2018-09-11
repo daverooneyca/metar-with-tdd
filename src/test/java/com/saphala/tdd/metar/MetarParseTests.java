@@ -25,36 +25,35 @@ class MetarParseTests {
    
    
    @Test
-   void stationShouldBeTheFirstElement() {
+   void stationForDetroit() {
       String station = getItemAt(STATION_INDEX);
 
       assertThat(station).isEqualTo("KDTW");
    }
 
    @Test
-   void reportTimeShouldBeTheSecondElement() {
+   void reportTimeForDetroit() {
       String reportTime = getItemAt(REPORT_TIME_INDEX);
 
       assertThat(reportTime).isEqualTo("210453Z");
-
    }
    
    @Test
-   void windsShouldBeTheThirdElement() {
+   void windsForDetroit() {
       String winds = getItemAt(WINDS_INDEX);
       
       assertThat(winds).isEqualTo("10006KT");
    }
    
    @Test
-   void visibilityShouldBeTheFourthElement() {
+   void visibilityForDetroit() {
       String visibility = getItemAt(VISIBILITY_INDEX);
             
       assertThat(visibility).isEqualTo("9SM");
    }
    
    @Test
-   void cloudsShouldBeTheFifthThroughSeventhElements() {
+   void cloudsForDetroit() {
       List<String> clouds = new ArrayList<String>();
       
       for (int i = CLOUDS_BEGIN_INDEX; i <= CLOUDS_END_INDEX; i++) {
@@ -65,26 +64,35 @@ class MetarParseTests {
    }
    
    @Test
-   void temperatureShouldBeTheEightElement() {
+   void temperatureForDetroit() {
       String temperature = getItemAt(TEMPERATURE_INDEX);
       
       assertThat(temperature).isEqualTo("23/20");
    }
    
    @Test
-   void altimeterShouldBeTheNinthElement() {
+   void altimeterForDetroit() {
       String altimeter = getItemAt(ALTIMETER_INDEX);
       
       assertThat(altimeter).isEqualTo("A2987");
    }
    
    @Test
-   void stationForChicagoShouldBeKORD() {
+   void stationForChicago() {
       metar = METAR_CHICAGO;
       
       String station = getItemAt(STATION_INDEX);
       
       assertThat(station).isEqualTo("KORD");
+   }
+   
+   @Test
+   void reportTimeForChicago() {
+      metar = METAR_CHICAGO;
+      
+      String reportTime = getItemAt(REPORT_TIME_INDEX);
+      
+      assertThat(reportTime).isEqualTo("111751Z");
    }
    
    private String getItemAt(int index) {
