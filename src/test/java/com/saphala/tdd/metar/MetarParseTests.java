@@ -2,6 +2,9 @@ package com.saphala.tdd.metar;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 class MetarParseTests {
@@ -35,6 +38,17 @@ class MetarParseTests {
       String visibility = getItemAt(3);
             
       assertThat(visibility).isEqualTo("9SM");
+   }
+   
+   @Test
+   void cloudsShouldBeTheFifthThroughSeventhElements() {
+      List<String> clouds = new ArrayList<String>();
+      
+      clouds.add(getItemAt(4));
+      clouds.add(getItemAt(5));
+      clouds.add(getItemAt(6));
+      
+      assertThat(clouds).containsExactly("FEW025", "BKN055", "OVC110");
    }
    
    
