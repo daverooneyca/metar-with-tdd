@@ -71,7 +71,7 @@ class MetarParseTests {
    void altimeterForDetroit() {
       Metar metar = new Metar(METAR_DETROIT);
       
-      String altimeter = metar.getItemAt(Metar.ALTIMETER_INDEX);
+      String altimeter = metar.extractAltimeter();
       
       assertThat(altimeter).isEqualTo("A2987");
    }
@@ -128,6 +128,15 @@ class MetarParseTests {
       String temperature = metar.extractTemperature();
       
       assertThat(temperature).isEqualTo("25/13");
+   }
+   
+   @Test
+   void altimeterForChicago() {
+      Metar metar = new Metar(METAR_CHICAGO);
+      
+      String altimeter = metar.extractAltimeter();
+      
+      assertThat(altimeter).isEqualTo("A3016");
    }
 
 }

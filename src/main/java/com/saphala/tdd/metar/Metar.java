@@ -1,6 +1,5 @@
 package com.saphala.tdd.metar;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,8 +10,10 @@ public class Metar {
    public static final int WINDS_INDEX = 2;
    public static final int VISIBILITY_INDEX = 3;
    public static final int CLOUDS_BEGIN_INDEX = 4;
-   public static final int TEMPERATURE_INDEX = 7;
-   public static final int ALTIMETER_INDEX = 8;
+   
+   public static final int TEMPERATURE_OFFSET = 0;
+   private static final int ALTIMETER_OFFSET = 1;
+
    
    private String rawMetar;
    private String[] rawMetarArray;
@@ -35,7 +36,7 @@ public class Metar {
    }
 
    public String extractTemperature() {
-      return getItemAt(getCloudsEndIndex());
+      return getItemAt(getCloudsEndIndex() + TEMPERATURE_OFFSET);
    }
 
    private int getCloudsEndIndex() {
@@ -49,5 +50,9 @@ public class Metar {
          cloudsEndIndex++;
       }
       return cloudsEndIndex;
+   }
+
+   public String extractAltimeter() {
+      return getItemAt(getCloudsEndIndex() + ALTIMETER_OFFSET);
    }
 }
