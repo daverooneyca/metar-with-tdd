@@ -3,7 +3,7 @@ package com.saphala.tdd.metar;
 import java.util.Arrays;
 import java.util.List;
 
-public class Metar {
+public class Metar { 
 
    public static final int STATION_INDEX = 0;
    public static final int REPORT_TIME_INDEX = 1;
