@@ -6,14 +6,12 @@ import java.util.List;
 
 public class MetarParser { 
 
-   public static final int STATION_INDEX = 0;
-   public static final int REPORT_TIME_INDEX = 1;
-   public static final int WINDS_INDEX = 2;
-   public static final int VISIBILITY_INDEX = 3;
-   public static final int WEATHER_INDEX = 4;
-   public static final int CLOUDS_BEGIN_INDEX = 5;
+   private static final int STATION_INDEX = 0;
+   private static final int REPORT_TIME_INDEX = 1;
+   private static final int WINDS_INDEX = 2;
+   private static final int VISIBILITY_INDEX = 3;
    
-   public static final int TEMPERATURE_OFFSET = 0;
+   private static final int TEMPERATURE_OFFSET = 0;
    private static final int ALTIMETER_OFFSET = 1;
 
    
@@ -45,7 +43,23 @@ public class MetarParser {
       return weather;
    }
 
-   public String getItemAt(int index) {
+   public String extractStation() {
+      return getItemAt(MetarParser.STATION_INDEX);
+   }
+
+   public String extractReportTime() {
+      return getItemAt(MetarParser.REPORT_TIME_INDEX);
+   }
+
+   public String extractWinds() {
+      return getItemAt(MetarParser.WINDS_INDEX);
+   }
+
+   public String extractVisibility() {
+      return getItemAt(MetarParser.VISIBILITY_INDEX);
+   }
+
+   private String getItemAt(int index) {
       return rawMetar[index];
    }
 
@@ -90,4 +104,5 @@ public class MetarParser {
       
       return element.substring(0, 3);
    }
+
 }
