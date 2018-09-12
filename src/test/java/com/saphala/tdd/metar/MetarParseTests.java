@@ -2,6 +2,7 @@ package com.saphala.tdd.metar;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -9,9 +10,10 @@ import org.junit.jupiter.api.Test;
 class MetarParseTests {
 
 
-   private static final String METAR_DETROIT = "KDTW 210453Z 10006KT 9SM FEW025 BKN055 OVC110 23/20 A2987 RMK AO2 RAE35 SLP111 P0000 T02330200 402830194";
-   private static final String METAR_CHICAGO = "KORD 111751Z VRB04KT 10SM FEW043 25/13 A3016 RMK AO2 SLP209 T02500128 10250 20144 58003";
-   private static final String METAR_JFK     = "KJFK 121651Z VRB04KT 6SM BR BKN007 OVC029 25/24 A3024 RMK AO2 SLP239 T02500244";
+   private static final String METAR_DETROIT  = "KDTW 210453Z 10006KT 9SM FEW025 BKN055 OVC110 23/20 A2987 RMK AO2 RAE35 SLP111 P0000 T02330200 402830194";
+   private static final String METAR_CHICAGO  = "KORD 111751Z VRB04KT 10SM FEW043 25/13 A3016 RMK AO2 SLP209 T02500128 10250 20144 58003";
+   private static final String METAR_JFK      = "KJFK 121651Z VRB04KT 6SM BR BKN007 OVC029 25/24 A3024 RMK AO2 SLP239 T02500244";
+   private static final String METAR_EDMONTON = "CYEG 121751Z 34013G20KT 5SM -FZDZ BR BKN006 OVC011 M00/M01 A2995 RMK ST7SC1 SLP170";
 
    @Test
    void stationForDetroit() {
@@ -140,6 +142,17 @@ class MetarParseTests {
    }
    
    @Test
+   void weatherForChicago() {
+      Metar metar = new Metar(METAR_CHICAGO);
+      
+      List<String> weather = metar.extractWeather();
+      
+      ArrayList<String> emptyList = new ArrayList<String>();
+      
+      assertThat(weather).isEqualTo(emptyList);
+   }
+   
+   @Test
    void stationForJFK() {
       Metar metar = new Metar(METAR_JFK);
       
@@ -170,9 +183,9 @@ class MetarParseTests {
    void weatherForJFK() {
       Metar metar = new Metar(METAR_JFK);
       
-      String weather = metar.getItemAt(Metar.WEATHER_INDEX);
+      List<String> weather = metar.extractWeather();
       
-      assertThat(weather).isEqualTo("BR");
+      assertThat(weather).containsExactly("BR");
    }
    
    @Test
@@ -182,6 +195,15 @@ class MetarParseTests {
       List<String> clouds = metar.extractClouds();
       
       assertThat(clouds).containsExactly("BKN007", "OVC029");       
+   }
+   
+   @Test
+   void weatherForEdmonton() {
+      Metar metar = new Metar(METAR_EDMONTON);
+      
+      List<String> weather = metar.extractWeather();
+      
+      assertThat(weather).containsExactly("-FZDZ", "BR");
    }
    
 
