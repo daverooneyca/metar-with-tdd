@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Metar { 
+public class MetarParser { 
 
    public static final int STATION_INDEX = 0;
    public static final int REPORT_TIME_INDEX = 1;
@@ -17,32 +17,44 @@ public class Metar {
    private static final int ALTIMETER_OFFSET = 1;
 
    
-   private String rawMetar;
-   private String[] rawMetarArray;
+   private String[] rawMetar;
 
-   public Metar(String metar) {
-      this.rawMetar = metar;
-      this.rawMetarArray = this.rawMetar.split(" ");
+   public MetarParser(String metar) {
+      this.rawMetar = metar.split(" ");
    }
 
    public List<String> extractClouds() {
-      return Arrays.asList(rawMetarArray).subList(getCloudsBeginIndex(), getCloudsEndIndex());
-   }
-
-   public String getItemAt(int index) {
-      return rawMetarArray[index];
+      return Arrays.asList(rawMetar).subList(getCloudsBeginIndex(), getCloudsEndIndex());
    }
 
    public String extractTemperature() {
       return getItemAt(getCloudsEndIndex() + TEMPERATURE_OFFSET);
    }
 
+   public String extractAltimeter() {
+      return getItemAt(getCloudsEndIndex() + ALTIMETER_OFFSET);
+   }
+
+   public List<String> extractWeather() {
+      List<String> weather = new ArrayList<String>();
+      
+      for (int i = VISIBILITY_INDEX + 1; i < getCloudsBeginIndex(); i++) {
+         weather.add(rawMetar[i]);
+      }
+      
+      return weather;
+   }
+
+   public String getItemAt(int index) {
+      return rawMetar[index];
+   }
+
    private int getCloudsEndIndex() {
       int cloudsBeginIndex = getCloudsBeginIndex();
       int cloudsEndIndex = cloudsBeginIndex;
       
-      for (int i = cloudsBeginIndex; i < rawMetarArray.length; i++) {
-         if(Character.isDigit(rawMetarArray[i].charAt(0))) {
+      for (int i = cloudsBeginIndex; i < rawMetar.length; i++) {
+         if(Character.isDigit(rawMetar[i].charAt(0))) {
             break;
          }
          
@@ -56,8 +68,8 @@ public class Metar {
       
       List<String> cloudPrefixes = Arrays.asList(new String[]{"SKC", "FEW", "SCT", "BKN", "OVC"});
       
-      for (int i = VISIBILITY_INDEX; i < rawMetarArray.length; i++) {
-         String element = rawMetarArray[i];
+      for (int i = VISIBILITY_INDEX; i < rawMetar.length; i++) {
+         String element = rawMetar[i];
          
          String prefix = prefixFrom(element);
          
@@ -77,19 +89,5 @@ public class Metar {
       }
       
       return element.substring(0, 3);
-   }
-
-   public String extractAltimeter() {
-      return getItemAt(getCloudsEndIndex() + ALTIMETER_OFFSET);
-   }
-
-   public List<String> extractWeather() {
-      List<String> weather = new ArrayList<String>();
-      
-      for (int i = VISIBILITY_INDEX + 1; i < getCloudsBeginIndex(); i++) {
-         weather.add(rawMetarArray[i]);
-      }
-      
-      return weather;
    }
 }

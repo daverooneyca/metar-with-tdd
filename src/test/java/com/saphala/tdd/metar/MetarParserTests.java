@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-class MetarParseTests {
+class MetarParserTests {
 
 
    private static final String METAR_DETROIT  = "KDTW 210453Z 10006KT 9SM FEW025 BKN055 OVC110 23/20 A2987 RMK AO2 RAE35 SLP111 P0000 T02330200 402830194";
@@ -17,43 +17,43 @@ class MetarParseTests {
 
    @Test
    void stationForDetroit() {
-      Metar metar = new Metar(METAR_DETROIT);
+      MetarParser metar = new MetarParser(METAR_DETROIT);
       
-      String station = metar.getItemAt(Metar.STATION_INDEX);
+      String station = metar.getItemAt(MetarParser.STATION_INDEX);
 
       assertThat(station).isEqualTo("KDTW");
    }
 
    @Test
    void reportTimeForDetroit() {
-      Metar metar = new Metar(METAR_DETROIT);
+      MetarParser metar = new MetarParser(METAR_DETROIT);
       
-      String reportTime = metar.getItemAt(Metar.REPORT_TIME_INDEX);
+      String reportTime = metar.getItemAt(MetarParser.REPORT_TIME_INDEX);
 
       assertThat(reportTime).isEqualTo("210453Z");
    }
    
    @Test
    void windsForDetroit() {
-      Metar metar = new Metar(METAR_DETROIT);
+      MetarParser metar = new MetarParser(METAR_DETROIT);
       
-      String winds = metar.getItemAt(Metar.WINDS_INDEX);
+      String winds = metar.getItemAt(MetarParser.WINDS_INDEX);
       
       assertThat(winds).isEqualTo("10006KT");
    }
    
    @Test
    void visibilityForDetroit() {
-      Metar metar = new Metar(METAR_DETROIT);
+      MetarParser metar = new MetarParser(METAR_DETROIT);
       
-      String visibility = metar.getItemAt(Metar.VISIBILITY_INDEX);
+      String visibility = metar.getItemAt(MetarParser.VISIBILITY_INDEX);
             
       assertThat(visibility).isEqualTo("9SM");
    }
    
    @Test
    void cloudsForDetroit() {
-      Metar metar = new Metar(METAR_DETROIT);
+      MetarParser metar = new MetarParser(METAR_DETROIT);
       
       List<String> clouds = metar.extractClouds();
       
@@ -62,7 +62,7 @@ class MetarParseTests {
    
    @Test
    void temperatureForDetroit() {
-      Metar metar = new Metar(METAR_DETROIT);
+      MetarParser metar = new MetarParser(METAR_DETROIT);
       
       String temperature = metar.extractTemperature();
       
@@ -71,7 +71,7 @@ class MetarParseTests {
    
    @Test
    void altimeterForDetroit() {
-      Metar metar = new Metar(METAR_DETROIT);
+      MetarParser metar = new MetarParser(METAR_DETROIT);
       
       String altimeter = metar.extractAltimeter();
       
@@ -80,43 +80,43 @@ class MetarParseTests {
    
    @Test
    void stationForChicago() {
-      Metar metar = new Metar(METAR_CHICAGO);
+      MetarParser metar = new MetarParser(METAR_CHICAGO);
       
-      String station = metar.getItemAt(Metar.STATION_INDEX);
+      String station = metar.getItemAt(MetarParser.STATION_INDEX);
       
       assertThat(station).isEqualTo("KORD");
    }
    
    @Test
    void reportTimeForChicago() {
-      Metar metar = new Metar(METAR_CHICAGO);
+      MetarParser metar = new MetarParser(METAR_CHICAGO);
       
-      String reportTime = metar.getItemAt(Metar.REPORT_TIME_INDEX);
+      String reportTime = metar.getItemAt(MetarParser.REPORT_TIME_INDEX);
       
       assertThat(reportTime).isEqualTo("111751Z");
    }
    
    @Test
    void windsForChicago() {
-      Metar metar = new Metar(METAR_CHICAGO);
+      MetarParser metar = new MetarParser(METAR_CHICAGO);
       
-      String winds = metar.getItemAt(Metar.WINDS_INDEX);
+      String winds = metar.getItemAt(MetarParser.WINDS_INDEX);
       
       assertThat(winds).isEqualTo("VRB04KT");
    }
    
    @Test
    void visibilityforChicago() {
-      Metar metar = new Metar(METAR_CHICAGO);
+      MetarParser metar = new MetarParser(METAR_CHICAGO);
       
-      String visibility = metar.getItemAt(Metar.VISIBILITY_INDEX);
+      String visibility = metar.getItemAt(MetarParser.VISIBILITY_INDEX);
       
       assertThat(visibility).isEqualTo("10SM");
    }
    
    @Test
    void cloudsForChicago() {
-      Metar metar = new Metar(METAR_CHICAGO);
+      MetarParser metar = new MetarParser(METAR_CHICAGO);
       
       List<String> clouds = metar.extractClouds();
       
@@ -125,7 +125,7 @@ class MetarParseTests {
    
    @Test
    void temperatureForChicago() {
-      Metar metar = new Metar(METAR_CHICAGO);
+      MetarParser metar = new MetarParser(METAR_CHICAGO);
       
       String temperature = metar.extractTemperature();
       
@@ -134,7 +134,7 @@ class MetarParseTests {
    
    @Test
    void altimeterForChicago() {
-      Metar metar = new Metar(METAR_CHICAGO);
+      MetarParser metar = new MetarParser(METAR_CHICAGO);
       
       String altimeter = metar.extractAltimeter();
       
@@ -143,7 +143,7 @@ class MetarParseTests {
    
    @Test
    void weatherForChicago() {
-      Metar metar = new Metar(METAR_CHICAGO);
+      MetarParser metar = new MetarParser(METAR_CHICAGO);
       
       List<String> weather = metar.extractWeather();
       
@@ -154,34 +154,34 @@ class MetarParseTests {
    
    @Test
    void stationForJFK() {
-      Metar metar = new Metar(METAR_JFK);
+      MetarParser metar = new MetarParser(METAR_JFK);
       
-      String station = metar.getItemAt(Metar.STATION_INDEX);
+      String station = metar.getItemAt(MetarParser.STATION_INDEX);
       
       assertThat(station).isEqualTo("KJFK");
    }
    
    @Test
    void reportTimeForJFK() {
-      Metar metar = new Metar(METAR_JFK);
+      MetarParser metar = new MetarParser(METAR_JFK);
       
-      String reportTime = metar.getItemAt(Metar.REPORT_TIME_INDEX);
+      String reportTime = metar.getItemAt(MetarParser.REPORT_TIME_INDEX);
       
       assertThat(reportTime).isEqualTo("121651Z");
    }
    
    @Test
    void windsForJFK() {
-      Metar metar = new Metar(METAR_JFK);
+      MetarParser metar = new MetarParser(METAR_JFK);
       
-      String winds = metar.getItemAt(Metar.WINDS_INDEX);
+      String winds = metar.getItemAt(MetarParser.WINDS_INDEX);
       
       assertThat(winds).isEqualTo("VRB04KT");
    }
 
    @Test
    void weatherForJFK() {
-      Metar metar = new Metar(METAR_JFK);
+      MetarParser metar = new MetarParser(METAR_JFK);
       
       List<String> weather = metar.extractWeather();
       
@@ -190,7 +190,7 @@ class MetarParseTests {
    
    @Test
    void cloudsForJFK() {
-      Metar metar = new Metar(METAR_JFK);
+      MetarParser metar = new MetarParser(METAR_JFK);
       
       List<String> clouds = metar.extractClouds();
       
@@ -199,7 +199,7 @@ class MetarParseTests {
    
    @Test
    void weatherForEdmonton() {
-      Metar metar = new Metar(METAR_EDMONTON);
+      MetarParser metar = new MetarParser(METAR_EDMONTON);
       
       List<String> weather = metar.extractWeather();
       
