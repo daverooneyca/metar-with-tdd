@@ -11,7 +11,7 @@ class MetarParseTests {
 
    private static final String METAR_DETROIT = "KDTW 210453Z 10006KT 9SM FEW025 BKN055 OVC110 23/20 A2987 RMK AO2 RAE35 SLP111 P0000 T02330200 402830194";
    private static final String METAR_CHICAGO = "KORD 111751Z VRB04KT 10SM FEW043 25/13 A3016 RMK AO2 SLP209 T02500128 10250 20144 58003";
-   
+   private static final String METAR_JFK     = "KJFK 121651Z VRB04KT 6SM BR BKN007 OVC029 25/24 A3024 RMK AO2 SLP239 T02500244";
 
    @Test
    void stationForDetroit() {
@@ -138,5 +138,51 @@ class MetarParseTests {
       
       assertThat(altimeter).isEqualTo("A3016");
    }
+   
+   @Test
+   void stationForJFK() {
+      Metar metar = new Metar(METAR_JFK);
+      
+      String station = metar.getItemAt(Metar.STATION_INDEX);
+      
+      assertThat(station).isEqualTo("KJFK");
+   }
+   
+   @Test
+   void reportTimeForJFK() {
+      Metar metar = new Metar(METAR_JFK);
+      
+      String reportTime = metar.getItemAt(Metar.REPORT_TIME_INDEX);
+      
+      assertThat(reportTime).isEqualTo("121651Z");
+   }
+   
+   @Test
+   void windsForJFK() {
+      Metar metar = new Metar(METAR_JFK);
+      
+      String winds = metar.getItemAt(Metar.WINDS_INDEX);
+      
+      assertThat(winds).isEqualTo("VRB04KT");
+   }
+
+   @Test
+   void weatherForJFK() {
+      Metar metar = new Metar(METAR_JFK);
+      
+      String weather = metar.getItemAt(Metar.WEATHER_INDEX);
+      
+      assertThat(weather).isEqualTo("BR");
+   }
+   
+   @Test
+   void cloudsForJFK() {
+      Metar metar = new Metar(METAR_JFK);
+      
+      List<String> clouds = metar.extractClouds();
+      
+      assertThat(clouds).containsExactly("BKN007", "OVC029");       
+   }
+   
 
 }

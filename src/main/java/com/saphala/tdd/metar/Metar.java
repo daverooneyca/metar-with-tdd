@@ -9,7 +9,8 @@ public class Metar {
    public static final int REPORT_TIME_INDEX = 1;
    public static final int WINDS_INDEX = 2;
    public static final int VISIBILITY_INDEX = 3;
-   public static final int CLOUDS_BEGIN_INDEX = 4;
+   public static final int WEATHER_INDEX = 4;
+   public static final int CLOUDS_BEGIN_INDEX = 5;
    
    public static final int TEMPERATURE_OFFSET = 0;
    private static final int ALTIMETER_OFFSET = 1;
@@ -26,7 +27,8 @@ public class Metar {
    public List<String> extractClouds() {
       int cloudsEndIndex = getCloudsEndIndex();
       
-      List<String> clouds = Arrays.asList(rawMetarArray).subList(CLOUDS_BEGIN_INDEX, cloudsEndIndex);
+      int cloudsBeginIndex = getCloudsBeginIndex();
+      List<String> clouds = Arrays.asList(rawMetarArray).subList(cloudsBeginIndex, cloudsEndIndex);
             
       return clouds;
    }
@@ -40,9 +42,10 @@ public class Metar {
    }
 
    private int getCloudsEndIndex() {
-      int cloudsEndIndex = CLOUDS_BEGIN_INDEX;
+      int cloudsBeginIndex = getCloudsBeginIndex();
+      int cloudsEndIndex = cloudsBeginIndex;
       
-      for (int i = CLOUDS_BEGIN_INDEX; i < rawMetarArray.length; i++) {
+      for (int i = cloudsBeginIndex; i < rawMetarArray.length; i++) {
          if(Character.isDigit(rawMetarArray[i].charAt(0))) {
             break;
          }
@@ -50,6 +53,34 @@ public class Metar {
          cloudsEndIndex++;
       }
       return cloudsEndIndex;
+   }
+
+   private int getCloudsBeginIndex() {
+      int cloudsBeginIndex = VISIBILITY_INDEX;
+      
+      List<String> cloudPrefixes = Arrays.asList(new String[]{"SKC", "FEW", "SCT", "BKN", "OVC"});
+      
+      for (int i = VISIBILITY_INDEX; i < rawMetarArray.length; i++) {
+         String element = rawMetarArray[i];
+         
+         String prefix = prefixFrom(element);
+         
+         if(cloudPrefixes.contains(prefix)) {
+            break;
+         }
+         
+         cloudsBeginIndex++;
+      }
+      
+      return cloudsBeginIndex;
+   }
+
+   private String prefixFrom(String element) {
+      if (element.length() < 3) {
+         return element;
+      }
+      
+      return element.substring(0, 3);
    }
 
    public String extractAltimeter() {
