@@ -1,14 +1,14 @@
 # metar-with-tdd - Parsing and Decoding METAR Data Exercise
 A TDD exercise based on parsing and decoding aviation weather METAR data in Java. A typical METAR looks like this:
 
-     CYOW 081900Z 33007KT 15SM -RA SCT030TCU BKN100 BKN180 24\/22 A2984 RMK TCU4AC2AC1 SLP107 DENSITY ALT 1600FT
+     CYOW 081900Z 33007KT 15SM -RA SCT030TCU BKN100 BKN180 24/22 A2984 RMK TCU4AC2AC1 SLP107 DENSITY ALT 1600FT
 
 This is read as:
  - Station: Ottawa Macdonald/Cartier Airport, ICAO code 'CYOW'
  - Reporting Time: the day of the month 08, time in 'Zulu' or UTC 19:00
  - Wind Velocity: 330 degrees at 7 knots
  - Visibility: 15 statute miles
- - Conditions: -RA, rain
+ - Conditions: -RA, light rain
  - Clouds:
    - Scattered, 3000 feet AGL (above ground level), towering cumulus (TCU)
    - Broken, 10000 feet AGL
