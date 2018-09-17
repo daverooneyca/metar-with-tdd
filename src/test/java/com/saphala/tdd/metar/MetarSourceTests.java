@@ -2,12 +2,13 @@ package com.saphala.tdd.metar;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class MetarSourceTests {
 
    @Test
-   void metarForDetroit() {
+   void metarForDetroitUsingFake() {
       MetarSource source = new MetarSource() {
          @Override
          protected String retrieveMetarFor(String station) {
@@ -22,7 +23,7 @@ class MetarSourceTests {
    }
 
    @Test
-   void metarForChicago() {
+   void metarForChicagoUsingFake() {
       MetarSource source = new MetarSource() {
          @Override
          protected String retrieveMetarFor(String station) {
@@ -34,6 +35,16 @@ class MetarSourceTests {
       
       assertThat(metar.getStation()).isEqualTo("KORD");
       assertThat(metar.getReportTime()).isEqualTo("111751Z");
+   }
+   
+   @Test
+   @Tag("slow")
+   void retrieveFromActualSourceWithKnownStationShouldSucceed() {
+      MetarSource source = new MetarSource();
+      
+      Metar metar = source.metarFor("KORD");
+      
+      assertThat(metar.getStation()).isEqualTo("KDTW");
    }
 
 }
