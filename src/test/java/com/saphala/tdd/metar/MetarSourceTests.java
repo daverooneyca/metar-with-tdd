@@ -44,7 +44,7 @@ class MetarSourceTests {
       
       Metar metar = source.metarFor("KORD");
       
-      assertThat(metar.getStation()).isEqualTo("KDTW");
+      assertThat(metar.getStation()).isEqualTo("KORD");
    }
 
 }
